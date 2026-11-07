@@ -6,7 +6,17 @@ description, and [preview.png](preview.png).
 
 ## Install
 
-1. Link the mod into Herdr:
+1. Clone the repo, and run the next commands from its root:
+
+   ```sh
+   git clone https://github.com/AgkTF/herdr-agent-context ~/projects/herdr-agent-context
+   cd ~/projects/herdr-agent-context
+   ```
+
+   Run `herdr-app --version`. These files come from Herdr 0.1.13. If your version is not 0.1.13,
+   build the mod from [RECIPE.md](RECIPE.md) instead of linking it in step 2.
+
+2. Link the mod into Herdr:
 
    ```sh
    ln -s "$PWD/mods/agents-context" ~/.config/herdr-app/mods/agents-context
@@ -16,7 +26,7 @@ description, and [preview.png](preview.png).
    Herdr loads a symlinked mod folder. Herdr writes `gpui-kit.d.ts` and `jsconfig.json` into
    the folder. Git ignores them.
 
-2. Make a layout that uses the mod:
+3. Make a layout that uses the mod:
 
    ```sh
    herdr-app do layout.clone '{"name":"main","as":"main-context"}'
@@ -26,7 +36,7 @@ description, and [preview.png](preview.png).
    `"content": { "mod": "agents-context" }`. Then run
    `herdr-app do layout.switch '{"name":"main-context"}'`.
 
-3. Paste `statusline/context-label.sh` into your Claude Code status-line script, after
+4. Paste `statusline/context-label.sh` into your Claude Code status-line script, after
    `input=$(cat)`. It needs `jq` and `hc`. If you have no status-line script, make one that
    starts with `input=$(cat)`, and add it to `~/.claude/settings.json`:
 
