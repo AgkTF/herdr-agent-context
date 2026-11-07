@@ -1,3 +1,5 @@
+// Changed from the agents mod that ships with the Herdr app (version 0.1.13), under the
+// Apache License 2.0 (see LICENSE). The changes are marked CONTEXT.
 // Agents in grouped or priority views; parents take their most urgent sub-agent's place.
 // A viewed done agent stays in Done until left.
 

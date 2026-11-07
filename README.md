@@ -43,3 +43,8 @@ Clones never update. When Herdr ships a new `agents` mod, clone it again and app
 
 Switch to another layout (`ctrl-shift-l`). Delete the symlink, the layout file, and the status-line
 block. Live terminals keep their last label. To remove it: `hc label <terminal> usage.ctx=`.
+
+## License
+
+Apache License 2.0, see [LICENSE](LICENSE). `mods/agents-context/main.js` is changed from the
+`agents` mod that ships with the Herdr app (version 0.1.13). The changes are marked `CONTEXT`.

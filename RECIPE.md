@@ -40,7 +40,10 @@ row's own spacing applies. When the sidebar is collapsed (narrow), rows show no 
 
 - **Mod:** a `mod.clone` of the shipped `agents` mod, named `agents-context`
   (`herdr-app do mod.clone '{"name":"agents","as":"agents-context"}'`). This build is from
-  `cloned_from: {name: "agents", version: "0.1.13"}`. All added code has a `CONTEXT` comment:
+  `cloned_from: {name: "agents", version: "0.1.13"}`. All added code has a `CONTEXT` comment.
+  At the top of `main.js`, a two-line notice says that the file is changed from the shipped mod
+  under the Apache License 2.0, and that the changes are marked `CONTEXT`. Apache 2.0 requires
+  this notice. Keep it, and update its version. The added code:
   - module level: `WINDOW_MARGIN`, `ctxOf(k)` (parses the label `usage.ctx` =
     `<used>/<size>` from a `terminals()` record; null when absent, malformed, or size 0),
     `short(n)`, `tip(c)`;
