@@ -23,7 +23,14 @@ dot, or "Needs you"):
   Watch out.
 
 In a crewmate row, the value has a 6px right margin before the status mark. In an agent row, the
-row's own spacing applies. When the sidebar is collapsed (narrow), rows show no value.
+row's own spacing applies.
+
+When the sidebar is collapsed (narrower than 160 px, 44 px from the collapse button), each agent
+row shows the token count in place of its row number. It is plain text: 9.5px, right-aligned,
+`theme().dim`. From `WINDOW_MARGIN`, the text is `theme().blocked`, with no badge. The tooltip is
+the same as on the expanded row. A row without data keeps its row number. To fit wide values such as `950K` into
+the 44px rail, the collapsed row has 2px side padding (was 8px) and a 1px gap (was 4px). The status
+mark stays.
 
 ## How it behaves
 
@@ -54,7 +61,10 @@ row's own spacing applies. When the sidebar is collapsed (narrow), rows show no 
   - `render`: `termOf`, a map from address to `terminals()` record, built from `all` before
     `row`. Agent rows come from `agents()`, which has no labels, so `row` looks up
     `termOf.get(a.address)` and adds `.children([this.usage(t, termOf.get(a.address), "ag")].filter(Boolean))`
-    before `this.status(...)`.
+    before `this.status(...)`;
+  - `row`, collapsed branch: `lead`, the token text (id `ctx-rail-<address>`) or the row number
+    when `ctxOf` is null, in place of the row-number element. Row padding `px(2)` (was 8) and
+    gap 1 (was 4).
 - **Layout:** a `layout.clone` of `main`, named `main-context`. Only its `agents` block changes:
   `"content": { "mod": "agents-context" }`.
 - **Writer:** `statusline/context-label.sh`, pasted into the Claude Code status-line script. It
@@ -105,3 +115,6 @@ row's own spacing applies. When the sidebar is collapsed (narrow), rows show no 
   theme (`graphite`).
 - A terminal without the label (a plain shell, Pi, Codex that never ran Claude Code) shows no
   value.
+- Collapse the sidebar (44px). A Claude Code agent row shows its token number in place of the row
+  number, not clipped (`950K` fits). The fake `850000/1000000` label shows `850K` in red text,
+  with no badge. A row without the label shows its row number.
