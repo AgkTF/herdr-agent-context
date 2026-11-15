@@ -326,16 +326,24 @@ export default class Agents extends View {
       // An agent on another machine (`vps/t7`) says which.
       const machine = a.address.includes("/") ? a.address.split("/")[0] : null;
       if (collapsed) {
+        // CONTEXT (agents-context): the context tokens in place of the row number, as plain
+        // text (no badge: the rail stays quiet). Red from WINDOW_MARGIN. No data: the number.
+        const c = ctxOf(termOf.get(a.address));
+        const hot = Boolean(c) && c.used >= WINDOW_MARGIN * c.size;
+        const lead = div().id(`ctx-rail-${a.address}`).flex_1().min_w(0).whitespace_nowrap().text_right()
+          .when(!c, (el) => el.text_color(t.muted).child(String(i + 1)))
+          .when(Boolean(c), (el) => el.text_size(9.5).text_color(hot ? t.blocked : t.dim)
+            .tooltip(hot ? `${tip(c)} \u00b7 near compaction (from ${short(WINDOW_MARGIN * c.size)})` : tip(c)).child(short(c.used)));
         return h_flex()
           .id(`ag-${a.address}`)
           .h(26)
-          .px(8)
+          .px(2) // CONTEXT (agents-context): was 8, so the tokens fit the 44 px rail
           .flex_none()
           .items_center()
-          .gap(4)
+          .gap(1) // CONTEXT (agents-context): was 4
           .hover((s) => s.bg(t.hover))
           .on_click(() => run("pane.focus", { pane: a.pane }))
-          .child(div().flex_1().min_w(0).whitespace_nowrap().text_right().text_color(t.muted).child(String(i + 1)))
+          .child(lead)
           .child(h_flex().w(14).flex_none().items_center().justify_center().child(this.status(t, a, true)));
       }
       const when = this.since(a);
